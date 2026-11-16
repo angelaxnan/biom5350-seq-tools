@@ -37,12 +37,15 @@ def main():
     if len(sys.argv) != 2:
         print(__doc__)
         sys.exit(1)
+    aveGC, lines = 0, 0
     for name, seq in read_fasta(sys.argv[1]):
+        aveGC += gc_content(seq)
+        lines += 1
         print(
             f"{name}\tGC = {100 * gc_content(seq):.1f}%\tAT = {100 * (1-gc_content(seq)):.1f}%"
         )
         print("length\t", len(seq))
-
+    print(f"summary average GC =\t {100 * aveGC/lines:.1f}%")
 
 if __name__ == "__main__":
     main()
